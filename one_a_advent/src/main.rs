@@ -8,17 +8,13 @@ fn main() -> std::io::Result<()> {
     let mut contents = String::new();
     buf_reader.read_to_string(&mut contents)?;
 
-    let mut test = contents.split_whitespace();
-    let mut sum = 0.0;
-    loop {
-        match test.next() {
-            Some(x) => {
-                sum += calc_total(mass_calc(x.parse().unwrap()));                
-            },
-            None => { break }
-        }
-    }   
-    println!("{}", sum); 
+    let test = contents.split_whitespace();
+    let output = test.fold(0.0, |mut acc, x| {
+        acc += calc_total(mass_calc(x.parse().unwrap()));
+        acc  
+     } );
+
+    println!("{}", output); 
     Ok(())
 }
 
