@@ -1,0 +1,7 @@
+[package]
+name = "one_advent"
+version = "0.1.0"
+authors = ["Austin Shoecraft <austin@shoecraft.xyz>"]
+edition = "2018"
+
+[dependencies]
