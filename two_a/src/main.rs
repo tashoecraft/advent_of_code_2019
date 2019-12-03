@@ -1,8 +1,18 @@
-fn main() {
-    let file = File::open("input.txt")?;
-    let mut buf_reader = BufReader::new(file);
-    let mut contents = String::new();
-    buf_reader.read_to_string(&mut contents)?;
+use std::fs;
 
+fn main() -> std::io::Result<()> {
+//    let mut contents: String = fs::read_to_string("input.txt")?;
 
+    let mut v: Vec<i32> = fs::read_to_string("input.txt")?.split(",")
+                            .collect()
+                            .map::<str>(|item| {
+                                if item.ends_with('\n') {
+                                    item.pop();
+                                }
+
+                                item.parse::<i32>()
+                            });
+    println!("{:?}", v);
+
+    Ok(())
 }

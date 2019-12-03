@@ -11,7 +11,7 @@ fn main() -> std::io::Result<()> {
     let test = contents.split_whitespace();
     let output = test.fold(0.0, |mut acc, x| {
         acc += calc_total(mass_calc(x.parse().unwrap()));
-        acc  
+        acc
      } );
 
     println!("{}", output); 
