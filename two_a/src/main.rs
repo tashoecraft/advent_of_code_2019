@@ -1,7 +1,6 @@
 use std::fs;
-use std::process;
 fn main() -> std::io::Result<()> {
-    let mut v: Vec<_> = fs::read_to_string("input.txt")?.split(",")
+    let mut v: Vec<i32> = fs::read_to_string("input.txt")?.split(",")
         .map(|item| {
             let mut s = item.to_string();
             if s.ends_with('\n') {
@@ -10,31 +9,31 @@ fn main() -> std::io::Result<()> {
             s.parse::<i32>().unwrap()
         })
         .collect();
-    let mut copy_v: Vec<_> = v.iter().cloned().collect();
+    let mut copy_v: Vec<i32> = v.iter().cloned().collect();
     let mut index: i32 = 0;
-    let mut current_opcode: i32 = copy_v[index];
+    let mut current_opcode: i32 = copy_v[index as usize];
 
     while current_opcode % 99 != 0 {
         if current_opcode % 2 == 0 {
-            let i:i32 = copy_v.get_mut(index+3).unwrap();
-            let first:i32 = copy_v.get_mut(index+1);
-            let second:i32 = copy_v.get_mut(index+3);
-            copy_v[i] = copy_v.get_mut(first) * copy_v.get_mut(second);
+            let i: i32 = copy_v[(index + 3) as usize];
+            let first: i32 = copy_v[(index + 1) as usize];
+            let second: i32 = copy_v[(index + 2) as usize];
+            copy_v.push(copy_v[first as usize] * copy_v[second as usize]);
+            copy_v.swap_remove(i as usize);
             index += 4;
-            current_opcode = copy_v[index];
-        } else if current_opcode % 1 == 0 {
-            let j:i32 = copy_v.get_mut(index+3);
-            let first:i32 = copy_v.get_mut(index+1);
-            let second:i32 = copy_v.get_mut(index+3);
-            copy_v[index] = copy_v.get_mut(first) + copy_v.get_mut(second);
-            index += 4;
-            current_opcode = copy_v.get_mut(index);
+            current_opcode = copy_v[index as usize];
         } else {
-            println!("PANIC");
-            process::exit(1);
+            let j: i32 = copy_v[(index + 3) as usize];
+            let first: i32 = copy_v[(index + 1) as usize];
+            let second: i32 = copy_v[(index + 2) as usize];
+            copy_v.push(copy_v[first as usize] + copy_v[second as usize]);
+            copy_v.swap_remove(j as usize);
+            index += 4;
+            current_opcode = copy_v[index as usize];
         }
     }
-    println!("{:?}", v);
+
+    println!("{:?}", copy_v);
 
     Ok(())
 }
