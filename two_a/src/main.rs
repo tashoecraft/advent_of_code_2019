@@ -10,30 +10,36 @@ fn main() -> std::io::Result<()> {
         })
         .collect();
     let mut copy_v: Vec<i32> = v.iter().cloned().collect();
-    let mut index: i32 = 0;
-    let mut current_opcode: i32 = copy_v[index as usize];
 
-    while current_opcode % 99 != 0 {
-        if current_opcode % 2 == 0 {
-            let i: i32 = copy_v[(index + 3) as usize];
-            let first: i32 = copy_v[(index + 1) as usize];
-            let second: i32 = copy_v[(index + 2) as usize];
-            copy_v.push(copy_v[first as usize] * copy_v[second as usize]);
-            copy_v.swap_remove(i as usize);
-            index += 4;
-            current_opcode = copy_v[index as usize];
-        } else {
-            let j: i32 = copy_v[(index + 3) as usize];
-            let first: i32 = copy_v[(index + 1) as usize];
-            let second: i32 = copy_v[(index + 2) as usize];
-            copy_v.push(copy_v[first as usize] + copy_v[second as usize]);
-            copy_v.swap_remove(j as usize);
-            index += 4;
-            current_opcode = copy_v[index as usize];
-        }
-    }
+    execute_computer(&mut copy_v);
 
     println!("{:?}", copy_v);
 
     Ok(())
+}
+
+fn execute_computer(computer_code: &mut Vec<i32>) {
+    let mut index: i32 = 0;
+    let mut current_opcode: i32 = computer_code[index as usize];
+    while current_opcode % 99 != 0 {
+        if current_opcode % 2 == 0 {
+            let i: i32 = computer_code[(index + 3) as usize];
+            let first: i32 = computer_code[(index + 1) as usize];
+            let second: i32 = computer_code[(index + 2) as usize];
+            computer_code.push(computer_code[first as usize] * computer_code[second as usize]);
+            computer_code.swap_remove(i as usize);
+            index += 4;
+            current_opcode = computer_code[index as usize];
+        } else {
+            let j: i32 = computer_code[(index + 3) as usize];
+            let first: i32 = computer_code[(index + 1) as usize];
+            let second: i32 = computer_code[(index + 2) as usize];
+            computer_code.push(computer_code[first as usize] + computer_code[second as usize]);
+            computer_code.swap_remove(j as usize);
+            index += 4;
+            current_opcode = computer_code[index as usize];
+        }
+    }
+
+//    copy_v
 }
