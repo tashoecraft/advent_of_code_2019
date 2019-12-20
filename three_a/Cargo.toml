@@ -1,0 +1,7 @@
+[package]
+name = "three_a"
+version = "0.1.0"
+authors = ["Austin Shoecraft <ashoecraft@jibe.com>"]
+edition = "2018"
+
+[dependencies]
